@@ -7,7 +7,7 @@ import Link from "next/link";
 import { AiFillHome, AiOutlineMenu } from "react-icons/ai";
 import { ImCancelCircle } from "react-icons/im";
 import Discover from "./Discover";
-import Suggested from "./Suggested";
+import SuggestedAccounts from "./SuggestedAccounts";
 import Footer from "./Footer";
 
 const Sidebar = () => {
@@ -40,7 +40,7 @@ const Sidebar = () => {
           </div>
 
           <Discover />
-          <Suggested />
+          <SuggestedAccounts />
           <Footer />
         </div>
       )}
