@@ -7,15 +7,21 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import { BiSearch } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
+import { IUser } from "../types";
 
 import Logo from "../utils/food-app-logo.png";
 import { createOrGetUser } from "../utils";
 import useAuthStore from "../store/authStore";
 
 const Navbar = () => {
+  const [user, setUser] = useState<IUser | null>();
   const [searchValue, setSearchValue] = useState("");
   const router = useRouter();
   const { userProfile, addUser, removeUser } = useAuthStore();
+
+  useEffect(() => {
+    setUser(userProfile);
+  }, [userProfile]);
 
   const handleSearch = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -60,7 +66,7 @@ const Navbar = () => {
       </div>
 
       <div>
-        {userProfile ? (
+        {user ? (
           <div className="flex gap-5 md:gap-10">
             <Link href="/upload">
               <button className="border-2 px-2 md:px-4 text-base font-semibold flex items-center gap-2">
@@ -68,18 +74,18 @@ const Navbar = () => {
                 <span className="hidden md:block">Upload</span>
               </button>
             </Link>
-            {userProfile.image && (
-              <Link href="/">
-                <>
+            {user.image && (
+              <Link href={`/profile/${user._id}`}>
+                <div>
                   <Image
                     width={40}
                     height={40}
                     className="rounded-full cursor-pointer"
-                    src={userProfile.image}
-                    alt="profile photo"
+                    src={user.image}
+                    alt="user"
                     priority={true}
                   />
-                </>
+                </div>
               </Link>
             )}
             <button
