@@ -11,7 +11,7 @@ import SuggestedAccounts from "./SuggestedAccounts";
 import Footer from "./Footer";
 
 const Sidebar = () => {
-  const [showSideBar, setShowSideBar] = useState(true);
+  const [showSideBar, setShowSideBar] = useState<boolean>(true);
 
   const userProfile = false;
 
@@ -22,7 +22,7 @@ const Sidebar = () => {
     <div>
       <div
         className="block xl:hidden m-2 ml-4 mt-3 text-xl"
-        onClick={() => setShowSideBar((prev) => !prev)}
+        onClick={() => setShowSideBar(!showSideBar)}
       >
         {showSideBar ? <ImCancelCircle /> : <AiOutlineMenu />}
       </div>
