@@ -1,63 +1,26 @@
-import { BsCode, BsEmojiSunglasses } from "react-icons/bs";
-import { GiCakeSlice, GiGalaxy, GiLipstick } from "react-icons/gi";
-import { FaPaw, FaMedal, FaGamepad } from "react-icons/fa";
+import { GiChicken, GiPig, GiCow } from "react-icons/gi";
 
 export const topics = [
   {
-    name: "coding",
-    icon: <BsCode />,
+    name: "chicken",
+    ja: "鶏肉",
+    icon: <GiChicken />,
   },
   {
-    name: "comedy",
-    icon: <BsEmojiSunglasses />,
+    name: "pork",
+    ja: "豚肉",
+    icon: <GiPig />,
   },
   {
-    name: "gaming",
-    icon: <FaGamepad />,
-  },
-  {
-    name: "food",
-    icon: <GiCakeSlice />,
-  },
-  {
-    name: "dance",
-    icon: <GiGalaxy />,
-  },
-  {
-    name: "beauty",
-    icon: <GiLipstick />,
-  },
-  {
-    name: "animals",
-    icon: <FaPaw />,
-  },
-  {
-    name: "sports",
-    icon: <FaMedal />,
+    name: "beef",
+    ja: "牛肉",
+    icon: <GiCow />,
   },
 ];
 
 export const footerList1 = [
-  "About",
-  "Newsroom",
-  "Store",
-  "Contact",
-  "Carrers",
-  "ByteDance",
-  "Creator Directory",
-];
-export const footerList2 = [
-  "TikTik for Good",
-  "Advertise",
-  "Developers",
-  "Transparency",
-  "TikTik Rewards",
-];
-export const footerList3 = [
-  "Help",
-  "Safety",
-  "Terms",
-  "Privacy",
-  "Creator Portal",
-  "Community Guidelines",
+  "MyRecipeについて",
+  "ニュース",
+  "お問い合わせ",
+  "プライバシーポリシー",
 ];
