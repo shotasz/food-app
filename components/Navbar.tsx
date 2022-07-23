@@ -32,11 +32,11 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-full flex justify-between items-center border-b-2 border-gray-200 py-2 px-4 bg-secondary">
+    <div className="w-full h-20 flex justify-between items-center border-b-2 border-gray-200 py-2 px-4">
       <Link href="/">
         <div className="w-[40px] md:w-[50px]">
           <Image
-            className="cursor-pointer"
+            className="cursor-pointer rounded-full"
             src={Logo}
             alt="HappyBowl"
             layout="responsive"
@@ -53,8 +53,8 @@ const Navbar = () => {
           <input
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
-            className="bg-primary p-3 md:text-md font-medium border-2 border-gray-100 focus:outline-none focus:border-2 focus:border-gray-300 w-[300px] md:w-[350px] rounded-full  md:top-0"
-            placeholder="Search accounts and videos"
+            className="bg-primary p-3 pl-6 md:text-md font-medium border-2 border-gray-100 focus:outline-none focus:border-2 focus:border-gray-300 w-[300px] md:w-[350px] rounded-full  md:top-0"
+            placeholder="アカウントまたはレシピを検索"
           />
           <button
             onClick={handleSearch}

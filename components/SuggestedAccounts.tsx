@@ -16,7 +16,7 @@ const SuggestedAccounts = () => {
   return (
     <div className="xl:border-b-2 border-gray-200 pb-4">
       <p className="text-gray-500 font-semibold m-3 mt-4 hidden xl:block">
-        Suggested accounts
+        アカウント
       </p>
       <div>
         {allUsers?.slice(0, 6).map((user: IUser) => (

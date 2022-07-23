@@ -35,13 +35,13 @@ const Search = ({ videos }: IProps) => {
           onClick={() => setIsAccounts(true)}
           className={`text-xl  font-semibold cursor-pointer mt-2 ${accounts}`}
         >
-          Accounts
+          アカウント
         </p>
         <p
           className={`text-xl font-semibold cursor-pointer  mt-2 ${isVideos}`}
           onClick={() => setIsAccounts(false)}
         >
-          Videos
+          レシピ
         </p>
       </div>
       {isAccounts ? (

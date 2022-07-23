@@ -17,9 +17,9 @@ const Discover = () => {
   return (
     <div className="xl:border-b-2 xl:border-gray-200 pb-6">
       <p className="text-gray-500 font-semibold m-3 mt-4 hidden xl:block">
-        Popular Topics
+        レシピ
       </p>
-      <div className="flex gap-3 flex-wrap">
+      <div className="flex gap-2 flex-col mx-3">
         {topics.map((item) => (
           <Link href={`/?topic=${item.name}`} key={item.name}>
             <div
@@ -29,7 +29,7 @@ const Discover = () => {
                 {item.icon}
               </span>
               <span className="font-medium text-base hidden xl:block capitalize">
-                {item.name}
+                {item.ja}
               </span>
             </div>
           </Link>
