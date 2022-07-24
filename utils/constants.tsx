@@ -17,7 +17,7 @@ export const topics = [
     icon: <GiCow />,
   },
   {
-    name: "bread",
+    name: "pan",
     ja: "パン",
     icon: <GiSlicedBread />,
   },
