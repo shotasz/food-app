@@ -1,4 +1,4 @@
-import { GiChicken, GiPig, GiCow } from "react-icons/gi";
+import { GiChicken, GiPig, GiCow, GiSlicedBread } from "react-icons/gi";
 
 export const topics = [
   {
@@ -15,6 +15,11 @@ export const topics = [
     name: "beef",
     ja: "牛肉",
     icon: <GiCow />,
+  },
+  {
+    name: "bread",
+    ja: "パン",
+    icon: <GiSlicedBread />,
   },
 ];
 
