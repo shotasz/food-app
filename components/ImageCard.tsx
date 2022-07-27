@@ -12,7 +12,7 @@ interface IProps {
   post: Video;
 }
 
-const VideoCard: NextPage<IProps> = ({ post }) => {
+const ImageCard: NextPage<IProps> = ({ post }) => {
   const [isHover, setIsHover] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [isVideoMuted, setIsVideoMuted] = useState(false);
@@ -44,12 +44,6 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
         >
           <Link href={`/detail/${post._id}`}>
             <div>
-              {/* <video
-                ref={videoRef}
-                loop
-                className="xl:w-[250px] lg:w-[280px] md:w-[300px] w-full h-[300px] object-cover rounded-2xl"
-                src={post.video.asset.url}
-              ></video> */}
               <div>
                 <Image
                   width={200}
@@ -122,4 +116,4 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
   );
 };
 
-export default VideoCard;
+export default ImageCard;

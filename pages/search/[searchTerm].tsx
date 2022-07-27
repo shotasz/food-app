@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { GoVerified } from "react-icons/go";
 import axios from "axios";
 
-import VideoCard from "../../components/VideoCard";
+import ImageCard from "../../components/ImageCard";
 import NoResults from "../../components/NoResults";
 import { IUser, Video } from "../../types";
 import { BASE_URL } from "../../utils";
@@ -80,7 +80,7 @@ const Search = ({ videos }: IProps) => {
         <div className="md:mt-16 flex flex-wrap gap-6 md:justify-start ">
           {videos.length ? (
             videos.map((post: Video, idx: number) => (
-              <VideoCard post={post} key={idx} />
+              <ImageCard post={post} key={idx} />
             ))
           ) : (
             <NoResults text={`No Video Results for ${searchTerm}`} />

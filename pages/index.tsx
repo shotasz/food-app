@@ -1,6 +1,6 @@
 import axios from "axios";
 import NoResults from "../components/NoResults";
-import VideoCard from "../components/VideoCard";
+import ImageCard from "../components/ImageCard";
 import { Video } from "../types";
 
 import { BASE_URL } from "../utils";
@@ -13,7 +13,7 @@ const Home = ({ videos }: IProps) => {
   return (
     <div className="grid grid-cols-2 lg:grid-cols-3 md:gap-10 gap-4 gap-y-10 mx-auto p-2">
       {videos.length ? (
-        videos.map((video: Video) => <VideoCard post={video} key={video._id} />)
+        videos.map((video: Video) => <ImageCard post={video} key={video._id} />)
       ) : (
         <NoResults text={"No Videos"} />
       )}
