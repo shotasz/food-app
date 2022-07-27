@@ -40,19 +40,27 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
         <div
           onMouseEnter={() => setIsHover(true)}
           onMouseLeave={() => setIsHover(false)}
-          className="rounded-3xl cursor-pointer"
+          className="cursor-pointer"
         >
           <Link href={`/detail/${post._id}`}>
             <div>
-              <video
+              {/* <video
                 ref={videoRef}
                 loop
                 className="xl:w-[250px] lg:w-[280px] md:w-[300px] w-full h-[300px] object-cover rounded-2xl"
                 src={post.video.asset.url}
-              ></video>
+              ></video> */}
               <div>
-                <p className="py-2 text-xl">{post.caption}</p>
+                <Image
+                  width={200}
+                  height={280}
+                  className="xl:w-[250px] lg:w-[280px] md:w-[300px] w-full h-[300px] object-cover transition-all duration-500 rounded-2xl"
+                  src={post.video.asset.url}
+                  alt="profile photo"
+                  priority={true}
+                />
               </div>
+              <p className="py-2 md:text-xl text-base">{post.caption}</p>
             </div>
           </Link>
 
@@ -82,12 +90,12 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
       </div>
 
       <div className="flex cursor-pointer font-semibold xl:w-[250px] lg:w-[280px] md:w-[300px] w-full">
-        <div className="w-10 h-10">
+        <div className="md:w-10 w-8 md:h-10 h-8">
           <Link href={`/profile/${post.postedBy._id}`}>
             <>
               <Image
-                width={40}
-                height={40}
+                width={42}
+                height={42}
                 className="rounded-xl"
                 src={post.postedBy.image}
                 alt="profile photo"
@@ -98,10 +106,10 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
         </div>
         <div>
           <Link href={`/profile/${post.postedBy._id}`}>
-            <div className="flex flex-col mx-4">
-              <p className="flex items-center md:text-sm font-bold text-primary">
+            <div className="flex flex-col md:mx-3 mx-1">
+              <p className="flex items-center md:text-base text-sm font-bold text-blue-600 hover:text-blue-400 transition-all">
                 {post.postedBy.userName}
-                <GoVerified className="text-blue-400 text-base ml-1" />
+                <GoVerified className="text-blue-400 text-base ml-1 md:flex hidden" />
               </p>
               <p className="capitalize font-medium text-xs text-gray-500">
                 {post.postedBy.userName}
