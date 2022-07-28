@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { GoVerified } from "react-icons/go";
+import { AiOutlineSend, AiOutlineLoading } from "react-icons/ai";
 
 import useAuthStore from "../store/authStore";
 import NoResults from "./NoResults";
@@ -32,8 +33,8 @@ const Comments = ({
   const { userProfile, allUsers } = useAuthStore();
 
   return (
-    <div className="border-t-2 border-gray-200 pt-4 px-10 bg-[#F8F8F8] border-b-2 lg:pb-0 pb-[100px]">
-      <div className="overflow-scroll lg:h-[475px]">
+    <div className="border-t-2 border-gray-200 md:pt-4 pt-2 md:px-8 px-2 bg-[#F8F8F8] border-b-2 md:pb-4 pb-2">
+      <div className="overflow-scroll lg:h-[450px]">
         {comments?.length > 0 ? (
           comments?.map((item: IComment, idx: number) => (
             <div key={idx}>
@@ -72,21 +73,28 @@ const Comments = ({
             </div>
           ))
         ) : (
-          <NoResults text="No comments yet" />
+          <NoResults text="コメントがありません" />
         )}
       </div>
 
       {userProfile && (
-        <div className="absolute bottom-0 left-0  pb-6 px-2 md:px-10 ">
+        <div className="pb-6">
           <form onSubmit={addComment} className="flex gap-4">
             <input
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               className="bg-primary px-6 py-4 text-md font-medium border-2 w-[250px] md:w-[700px] lg:w-[350px] border-gray-100 focus:outline-none focus:border-2 focus:border-gray-300 flex-1 rounded-lg"
-              placeholder="Add comment.."
+              placeholder="コメントを追加.."
             />
-            <button className="text-md text-gray-400 " onClick={addComment}>
-              {isPostingComment ? "Commenting..." : "Comment"}
+            <button
+              className="py-3 px-5 text-md bg-blue-400 rounded-2xl outline-none"
+              onClick={addComment}
+            >
+              {isPostingComment ? (
+                <AiOutlineLoading className="animate-spin text-white text-xl" />
+              ) : (
+                <AiOutlineSend className="text-white text-xl" />
+              )}
             </button>
           </form>
         </div>
