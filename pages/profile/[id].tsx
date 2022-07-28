@@ -65,13 +65,13 @@ const Profile = ({ data }: IProps) => {
             className={`text-xl font-semibold cursor-pointer mt-2 ${videos}`}
             onClick={() => setShowUserVideos(true)}
           >
-            Videos
+            レシピ
           </p>
           <p
             className={`text-xl font-semibold cursor-pointer mt-2 ${liked}`}
             onClick={() => setShowUserVideos(false)}
           >
-            Liked
+            いいね
           </p>
         </div>
         <div className="flex gap-6 flex-wrap md:justify-start">
@@ -81,7 +81,7 @@ const Profile = ({ data }: IProps) => {
             ))
           ) : (
             <NoResults
-              text={`No ${showUserVideos ? "" : "Liked"} Videos Yet`}
+              text={`${showUserVideos ? "" : "いいね"}したレシピがありません`}
             />
           )}
         </div>
