@@ -78,49 +78,30 @@ const Detail = ({ postDetails }: IProps) => {
   return (
     post && (
       <div className="flex w-full absolute left-0 top-0 bg-white flex-wrap lg:flex-nowrap">
-        <div className="relative flex-2 w-[1000px] lg:w-9/12 flex justify-center items-center bg-black">
+        <div className="relative flex-2 w-full lg:w-9/12 flex justify-center items-start lg:pt-28">
           <div className="absolute top-6 left-2 lg:left-6 flex gap-6 z-50">
             <p className="cursor-pointer" onClick={() => router.back()}>
-              <MdOutlineCancel className="text-white text-[35px]" />
+              <MdOutlineCancel className="text-black text-[35px]" />
             </p>
           </div>
-          <div className="relative">
-            <div className="lg:h-[100vh] h-[60vh]">
-              <video
-                ref={videoRef}
-                loop
-                onClick={onVideoClick}
+          <div>
+            <div className="w-full lg:pt-0 pt-20">
+              <Image
+                width={764}
+                height={548}
+                className="object-cover transition-all duration-500 md:rounded-2xl rounded-none"
                 src={post.video.asset.url}
-                className="h-full cursor-pointer"
-              ></video>
+                alt="profile photo"
+                priority={true}
+              />
             </div>
-
-            <div className="absolute top-[45%] left-[45%] cursor-pointer">
-              {!playing && (
-                <button onClick={onVideoClick}>
-                  <BsFillPlayFill className="text-white text-6xl lg:text-8xl" />
-                </button>
-              )}
-            </div>
-          </div>
-
-          <div className="absolute bottom-5 lg:bottom-10 right-5 lg:right-10 cursor-pointer">
-            {isVideoMuted ? (
-              <button onClick={() => setIsVideoMuted(false)}>
-                <HiVolumeOff className="text-white text-2xl lg:text-4xl" />
-              </button>
-            ) : (
-              <button onClick={() => setIsVideoMuted(true)}>
-                <HiVolumeUp className="text-white text-2xl lg:text-4xl" />
-              </button>
-            )}
           </div>
         </div>
 
-        <div className="relative w-[1000px] md:w-[900px] lg:w-[700px]">
-          <div className="lg:mt-20 mt-10">
+        <div className="relative w-full lg:w-[500px]">
+          <div className="mt-10">
             <div className="flex gap-3 p-2 cursor-pointer font-semibold rounded">
-              <div className="md:w-20 md:h-20 w-16 h-16 ml-4">
+              <div className="w-16 h-16 ml-4">
                 <Link href="/">
                   <>
                     <Image
@@ -149,9 +130,11 @@ const Detail = ({ postDetails }: IProps) => {
                 </Link>
               </div>
             </div>
-            <p className="px-10 text-lg text-gray-600">{post.caption}</p>
+            <p className="px-10 pt-4 text-3xl font-light text-gray-600">
+              {post.caption}
+            </p>
 
-            <div className="mt-10 px-10">
+            <div className="mt-10 px-10 pb-4">
               {userProfile && (
                 <LikeButton
                   likes={post.likes}
