@@ -7,6 +7,7 @@ import post from "./post";
 import user from "./user";
 import comment from "./comment";
 import postedBy from "./postedBy";
+import ingredients from "./ingredients";
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -20,5 +21,6 @@ export default createSchema({
     user,
     comment,
     postedBy,
+    ingredients,
   ]),
 });

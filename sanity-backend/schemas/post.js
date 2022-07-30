@@ -52,5 +52,25 @@ export default {
       title: "Topic",
       type: "string",
     },
+    {
+      name: "ingredients",
+      title: "Ingredients",
+      type: "array",
+      of: [
+        {
+          type: "ingredients",
+        },
+      ],
+    },
+    {
+      name: "recipe",
+      title: "Recipe",
+      type: "array",
+      of: [
+        {
+          type: "string",
+        },
+      ],
+    },
   ],
 };
