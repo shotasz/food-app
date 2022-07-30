@@ -95,6 +95,46 @@ const Detail = ({ postDetails }: IProps) => {
                 priority={true}
               />
             </div>
+
+            {/* <div className="w-full">
+              <h2 className="py-14 text-6xl font-light text-gray-600">
+                {post.caption}
+              </h2>
+            </div> */}
+
+            <div className="w-full py-14">
+              <h3 className="text-4xl font-light text-gray-600">材料</h3>
+
+              <div className="py-8">
+                {post &&
+                  post.ingredients.map((item, idx) => (
+                    <div key={idx} className="flex py-2">
+                      <span className="text-2xl w-1/12">{item.servings}</span>
+                      <span className="text-2xl w-full">{item.ingredient}</span>
+                    </div>
+                  ))}
+              </div>
+            </div>
+
+            <div className="w-full">
+              <h4 className="text-4xl font-light text-gray-600">作り方</h4>
+
+              <div className="py-8">
+                {post &&
+                  post.recipe.map((item, idx) => (
+                    <div key={idx} className="flex flex-col">
+                      <div>
+                        <span className="text-3xl font-light text-gray-600">
+                          {`Step ${idx + 1} / ${post.recipe.length}`}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="text-xl py-8">{item}</p>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
           </div>
         </div>
 
