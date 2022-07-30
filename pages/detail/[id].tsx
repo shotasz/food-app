@@ -96,13 +96,54 @@ const Detail = ({ postDetails }: IProps) => {
               />
             </div>
 
-            {/* <div className="w-full">
-              <h2 className="py-14 text-6xl font-light text-gray-600">
-                {post.caption}
-              </h2>
-            </div> */}
+            <div className="w-full pt-8 lg:hidden border-b-2 border-gray-200">
+              <div className="flex gap-3 p-2 cursor-pointer font-semibold rounded">
+                <div className="w-10 h-10">
+                  <Link href="/">
+                    <>
+                      <Image
+                        width={62}
+                        height={62}
+                        className="rounded-full"
+                        src={post.postedBy.image}
+                        alt="profile photo"
+                        layout="responsive"
+                        priority={true}
+                      />
+                    </>
+                  </Link>
+                </div>
+                <div>
+                  <Link href="/">
+                    <div className="flex flex-col gap-2 mt-2">
+                      <p className="flex gap-2 items-center md:text-base font-bold text-primary">
+                        {post.postedBy.userName}
+                        <GoVerified className="text-blue-400 text-base" />
+                      </p>
+                      <p className="capitalize font-medium text-xs text-gray-500 hidden md:block">
+                        {post.postedBy.userName}
+                      </p>
+                    </div>
+                  </Link>
+                </div>
+              </div>
 
-            <div className="w-full py-14">
+              <p className="p-2 pt-4 text-3xl font-light text-gray-600">
+                {post.caption}
+              </p>
+
+              <div className="mt-10 px-10 pb-4">
+                {userProfile && (
+                  <LikeButton
+                    likes={post.likes}
+                    handleLike={() => handleLike(true)}
+                    handleDislike={() => handleLike(false)}
+                  />
+                )}
+              </div>
+            </div>
+
+            <div className="w-full py-14 px-4">
               <h3 className="text-4xl font-light text-gray-600">材料</h3>
 
               <div className="py-8">
@@ -116,7 +157,7 @@ const Detail = ({ postDetails }: IProps) => {
               </div>
             </div>
 
-            <div className="w-full">
+            <div className="w-full px-4">
               <h4 className="text-4xl font-light text-gray-600">作り方</h4>
 
               <div className="py-8">
@@ -139,7 +180,7 @@ const Detail = ({ postDetails }: IProps) => {
         </div>
 
         <div className="relative w-full lg:w-[500px]">
-          <div className="mt-10">
+          <div className="mt-10 hidden lg:block">
             <div className="flex gap-3 p-2 cursor-pointer font-semibold rounded">
               <div className="w-16 h-16 ml-4">
                 <Link href="/">
@@ -170,6 +211,7 @@ const Detail = ({ postDetails }: IProps) => {
                 </Link>
               </div>
             </div>
+
             <p className="px-10 pt-4 text-3xl font-light text-gray-600">
               {post.caption}
             </p>
