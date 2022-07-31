@@ -18,13 +18,16 @@ const Upload = () => {
   >();
   const [wrongFileType, setWrongFileType] = useState(false);
   const [caption, setCaption] = useState("");
+  const [servings, setServings] = useState("");
+  const [ingredient, setIngredient] = useState("");
+  const [recipe, setRecipe] = useState("");
   const [category, setCategory] = useState(topics[0].name);
   const [savingPost, setSavingPost] = useState(false);
   const router = useRouter();
 
   const { userProfile }: { userProfile: any } = useAuthStore();
 
-  const uploadVideo = async (e: any) => {
+  const uploadRecipe = async (e: any) => {
     const selectedFile = e.target.files[0];
     const fileTypes = ["image/jpeg", "image/png"];
 
@@ -45,7 +48,14 @@ const Upload = () => {
   };
 
   const handlePost = async () => {
-    if (caption && imageAsset?._id && category) {
+    if (
+      caption &&
+      imageAsset?._id &&
+      category &&
+      servings &&
+      ingredient &&
+      recipe
+    ) {
       setSavingPost(true);
 
       const document = {
@@ -64,6 +74,15 @@ const Upload = () => {
           _ref: userProfile?._id,
         },
         topic: category,
+        ingredients: [
+          {
+            _type: "ingredients",
+            _key: userProfile?._id,
+            servings,
+            ingredient,
+          },
+        ],
+        recipe: [recipe],
       };
 
       await axios.post(`${BASE_URL}/api/post`, document);
@@ -82,7 +101,7 @@ const Upload = () => {
               レシピのイメージ画像をここで投稿して下さい
             </p>
           </div>
-          <div className="border-dashed rounded-xl border-4 border-gray-200 flex flex-col justify-center items-center outline-none mt-10 w-[360px] h-[460px] p-10 cursor-pointer hover:border-red-300 hover:bg-gray-100">
+          <div className="border-dashed rounded-xl md:border-4 border-2 border-gray-200 flex flex-col justify-center items-center outline-none mt-10 md:w-[360px] w-[320px] md:h-[460px] h-[420px] p-10 cursor-pointer hover:border-red-300 hover:bg-gray-100">
             {isLoading ? (
               <p>アップロード中...</p>
             ) : (
@@ -120,8 +139,8 @@ const Upload = () => {
                     </div>
                     <input
                       type="file"
-                      name="upload-video"
-                      onChange={uploadVideo}
+                      name="upload-recipe"
+                      onChange={uploadRecipe}
                       className="w-0 h-0"
                     />
                   </label>
@@ -135,7 +154,7 @@ const Upload = () => {
             )}
           </div>
         </div>
-        <div className="flex flex-col gap-3 pb-10">
+        <div className="flex flex-col gap-3 mt-auto md:w-[360px] w-[320px]">
           <label className="text-base font-medium">レシピ名</label>
           <input
             type="text"
@@ -155,10 +174,40 @@ const Upload = () => {
                 className="outline-none capitalize bg-white text-gray-700 text-base p-2 hover:bg-slate-300"
                 value={topic.name}
               >
-                {topic.name}
+                {topic.ja}
               </option>
             ))}
           </select>
+
+          <label className="text-base font-medium">レシピ</label>
+          <div className="flex">
+            <div className="mr-8">
+              <label className="text-sm font-medium">単位</label>
+              <input
+                type="text"
+                value={servings}
+                onChange={(e) => setServings(e.target.value)}
+                className="rounded outline-none text-base border-2 border-gray-200 p-2 w-full"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium">材料</label>
+              <input
+                type="text"
+                value={ingredient}
+                onChange={(e) => setIngredient(e.target.value)}
+                className="rounded outline-none text-base border-2 border-gray-200 p-2 w-full"
+              />
+            </div>
+          </div>
+
+          <label className="text-base font-medium">作り方</label>
+          <input
+            type="text"
+            value={recipe}
+            onChange={(e) => setRecipe(e.target.value)}
+            className="rounded outline-none text-base border-2 border-gray-200 p-2"
+          />
 
           <div className="flex gap-6 mt-10">
             <button

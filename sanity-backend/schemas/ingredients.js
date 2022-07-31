@@ -6,7 +6,7 @@ export default {
     {
       name: "servings",
       title: "Servings",
-      type: "number",
+      type: "string",
     },
     {
       name: "ingredient",

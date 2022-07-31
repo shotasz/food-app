@@ -27,7 +27,7 @@ export interface Video {
     };
   }[];
   ingredients: {
-    servings: number;
+    servings: string;
     ingredient: string;
   }[];
   recipe: Array[];

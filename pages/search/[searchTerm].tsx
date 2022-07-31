@@ -73,7 +73,7 @@ const Search = ({ videos }: IProps) => {
               </Link>
             ))
           ) : (
-            <NoResults text={`No Account Results for ${searchTerm}`} />
+            <NoResults text={`${searchTerm}に関するアカウント見つかりません`} />
           )}
         </div>
       ) : (
@@ -83,7 +83,7 @@ const Search = ({ videos }: IProps) => {
               <ImageCard post={post} key={idx} />
             ))
           ) : (
-            <NoResults text={`No Video Results for ${searchTerm}`} />
+            <NoResults text={`${searchTerm}に関するレシピ見つかりません`} />
           )}
         </div>
       )}

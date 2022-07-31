@@ -20,29 +20,10 @@ interface IProps {
 
 const Detail = ({ postDetails }: IProps) => {
   const [post, setPost] = useState(postDetails);
-  const [playing, setPlaying] = useState(false);
-  const [isVideoMuted, setIsVideoMuted] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const router = useRouter();
   const { userProfile }: any = useAuthStore();
   const [comment, setComment] = useState("");
   const [isPostingComment, setIsPostingComment] = useState(false);
-
-  const onVideoClick = () => {
-    if (playing) {
-      videoRef?.current?.pause();
-      setPlaying(false);
-    } else {
-      videoRef?.current?.play();
-      setPlaying(true);
-    }
-  };
-
-  useEffect(() => {
-    if (post && videoRef?.current) {
-      videoRef.current.muted = isVideoMuted;
-    }
-  }, [post, isVideoMuted]);
 
   const handleLike = async (like: boolean) => {
     if (userProfile) {
