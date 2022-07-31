@@ -6,6 +6,7 @@ const nextConfig = {
       "assets.media-platform.com",
       "lh3.googleusercontent.com",
       "cdn.sanity.io",
+      "m.media-amazon.com",
     ],
   },
 };
