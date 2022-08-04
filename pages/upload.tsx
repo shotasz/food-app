@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { useRouter } from "next/router";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import Image from "next/image";
 import axios from "axios";
 import { SanityAssetDocument } from "@sanity/client";
+import InputComponent from "../components/InputComponent";
+import { v4 as uuidv4 } from "uuid";
 
 import useAuthStore from "../store/authStore";
 import { client } from "../utils/client";
@@ -18,14 +20,18 @@ const Upload = () => {
   >();
   const [wrongFileType, setWrongFileType] = useState(false);
   const [caption, setCaption] = useState("");
-  const [servings, setServings] = useState("");
-  const [ingredient, setIngredient] = useState("");
-  const [recipe, setRecipe] = useState("");
   const [category, setCategory] = useState(topics[0].name);
   const [savingPost, setSavingPost] = useState(false);
   const router = useRouter();
-
   const { userProfile }: { userProfile: any } = useAuthStore();
+
+  const [inputFields, setInputFields] = useState([
+    {
+      id: uuidv4(),
+      servings: "",
+      ingredient: "",
+    },
+  ]);
 
   const uploadRecipe = async (e: any) => {
     const selectedFile = e.target.files[0];
@@ -48,14 +54,7 @@ const Upload = () => {
   };
 
   const handlePost = async () => {
-    if (
-      caption &&
-      imageAsset?._id &&
-      category &&
-      servings &&
-      ingredient &&
-      recipe
-    ) {
+    if (caption && imageAsset?._id && category && inputFields) {
       setSavingPost(true);
 
       const document = {
@@ -74,27 +73,54 @@ const Upload = () => {
           _ref: userProfile?._id,
         },
         topic: category,
-        ingredients: [
-          {
-            _type: "ingredients",
-            _key: userProfile?._id,
-            servings,
-            ingredient,
-          },
-        ],
-        recipe: [recipe],
+        ingredients: inputFields,
+        // ingredients: [
+        //   {
+        //     _type: "ingredients",
+        //     _key: userProfile?._id,
+        //     servings,
+        //     ingredient,
+        //   },
+        // ],
+        // recipe: [recipe],
       };
 
-      await axios.post(`${BASE_URL}/api/post`, document);
+      // await axios.post(`${BASE_URL}/api/post`, document);
 
-      router.push("/");
+      // router.push("/");
+      console.log(document);
     }
+  };
+
+  const handleChangeInput = (
+    id: string,
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
+    const newInputFields = inputFields.map((inputField: any) => {
+      if (id === inputField.id) {
+        inputField[event.target.name] = event.target.value;
+      }
+      return inputField;
+    });
+
+    setInputFields(newInputFields);
+  };
+
+  const handleAddFields = () => {
+    setInputFields([
+      ...inputFields,
+      {
+        id: uuidv4(),
+        servings: "",
+        ingredient: "",
+      },
+    ]);
   };
 
   return (
     <div className="flex w-full absolute left-0 top-[80px] mb-10 pt-10 lg:pt-20 pb-20 bg-[#F8F8F8]">
       <div className="bg-white rounded-lg h-full md:w-[950px] w-full mx-auto flex gap-10 flex-wrap justify-center items-center p-14 pt-16">
-        <div>
+        <div className="self-start">
           <div>
             <p className="text-2xl font-bold">画像をアップロード</p>
             <p className="text-base text-gray-400 mt-1">
@@ -180,34 +206,45 @@ const Upload = () => {
           </select>
 
           <label className="text-base font-medium">レシピ</label>
-          <div className="flex">
-            <div className="mr-8">
-              <label className="text-sm font-medium">単位</label>
-              <input
-                type="text"
-                value={servings}
-                onChange={(e) => setServings(e.target.value)}
-                className="rounded outline-none text-base border-2 border-gray-200 p-2 w-full"
+          {inputFields.map((inputField) => (
+            <div key={inputField.id}>
+              <InputComponent
+                id={inputField.id}
+                servings={inputField.servings}
+                ingredient={inputField.ingredient}
+                handleChangeInput={handleChangeInput}
               />
             </div>
-            <div>
-              <label className="text-sm font-medium">材料</label>
-              <input
-                type="text"
-                value={ingredient}
-                onChange={(e) => setIngredient(e.target.value)}
-                className="rounded outline-none text-base border-2 border-gray-200 p-2 w-full"
-              />
-            </div>
+          ))}
+          <div className="self-end">
+            <button
+              onClick={handleAddFields}
+              type="button"
+              className="h-[44px] w-16 p-2 bg-[#74CC2D] text-white text-base rounded"
+            >
+              追加
+            </button>
           </div>
 
           <label className="text-base font-medium">作り方</label>
-          <input
-            type="text"
-            value={recipe}
-            onChange={(e) => setRecipe(e.target.value)}
-            className="rounded outline-none text-base border-2 border-gray-200 p-2"
-          />
+          <div className="flex">
+            <input
+              type="text"
+              value={""}
+              onChange={() => {}}
+              className="rounded outline-none text-base border-2 border-gray-200 p-2 w-full"
+            />
+
+            <div className="self-end">
+              <button
+                onClick={() => {}}
+                type="button"
+                className="h-[44px] w-16 p-2 bg-[#74CC2D] text-white text-base rounded"
+              >
+                追加
+              </button>
+            </div>
+          </div>
 
           <div className="flex gap-6 mt-10">
             <button
