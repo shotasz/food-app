@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, ChangeEvent } from "react";
 import { useRouter } from "next/router";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -12,6 +12,7 @@ import useAuthStore from "../store/authStore";
 import { client } from "../utils/client";
 import { topics } from "../utils/constants";
 import { BASE_URL } from "../utils";
+import InputRecipes from "../components/InputRecipes";
 
 const Upload = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,17 +20,27 @@ const Upload = () => {
     SanityAssetDocument | undefined
   >();
   const [wrongFileType, setWrongFileType] = useState(false);
-  const [caption, setCaption] = useState("");
-  const [category, setCategory] = useState(topics[0].name);
   const [savingPost, setSavingPost] = useState(false);
   const router = useRouter();
   const { userProfile }: { userProfile: any } = useAuthStore();
 
+  const [caption, setCaption] = useState("");
+  const [category, setCategory] = useState(topics[0].name);
   const [inputFields, setInputFields] = useState([
     {
+      _type: "ingredients",
+      _key: userProfile?._id,
       id: uuidv4(),
       servings: "",
       ingredient: "",
+    },
+  ]);
+  const [recipes, setRecipes] = useState([
+    {
+      _type: "recipes",
+      _key: userProfile?._id,
+      id: uuidv4(),
+      recipe: "",
     },
   ]);
 
@@ -54,7 +65,7 @@ const Upload = () => {
   };
 
   const handlePost = async () => {
-    if (caption && imageAsset?._id && category && inputFields) {
+    if (caption && imageAsset?._id && category && inputFields && recipes) {
       setSavingPost(true);
 
       const document = {
@@ -74,52 +85,34 @@ const Upload = () => {
         },
         topic: category,
         ingredients: inputFields,
-        // ingredients: [
-        //   {
-        //     _type: "ingredients",
-        //     _key: userProfile?._id,
-        //     servings,
-        //     ingredient,
-        //   },
-        // ],
-        // recipe: [recipe],
+        recipes: recipes,
       };
 
-      // await axios.post(`${BASE_URL}/api/post`, document);
+      await axios.post(`${BASE_URL}/api/post`, document);
 
-      // router.push("/");
-      console.log(document);
+      router.push("/");
     }
   };
 
   const handleChangeInput = (
     id: string,
-    event: ChangeEvent<HTMLInputElement>
+    event: ChangeEvent<HTMLInputElement>,
+    state: {}[],
+    setState: any
   ) => {
-    const newInputFields = inputFields.map((inputField: any) => {
+    const newInputFields = state.map((inputField: any) => {
       if (id === inputField.id) {
         inputField[event.target.name] = event.target.value;
       }
       return inputField;
     });
 
-    setInputFields(newInputFields);
-  };
-
-  const handleAddFields = () => {
-    setInputFields([
-      ...inputFields,
-      {
-        id: uuidv4(),
-        servings: "",
-        ingredient: "",
-      },
-    ]);
+    setState(newInputFields);
   };
 
   return (
     <div className="flex w-full absolute left-0 top-[80px] mb-10 pt-10 lg:pt-20 pb-20 bg-[#F8F8F8]">
-      <div className="bg-white rounded-lg h-full md:w-[950px] w-full mx-auto flex gap-10 flex-wrap justify-center items-center p-14 pt-16">
+      <div className="bg-white rounded-lg h-full md:w-[950px] w-full mx-auto flex gap-10 flex-wrap justify-around items-center p-4 py-16">
         <div className="self-start">
           <div>
             <p className="text-2xl font-bold">画像をアップロード</p>
@@ -180,7 +173,7 @@ const Upload = () => {
             )}
           </div>
         </div>
-        <div className="flex flex-col gap-3 mt-auto md:w-[360px] w-[320px]">
+        <div className="flex flex-col gap-3 mt-20 md:w-[360px] w-[320px]">
           <label className="text-base font-medium">レシピ名</label>
           <input
             type="text"
@@ -206,58 +199,46 @@ const Upload = () => {
           </select>
 
           <label className="text-base font-medium">レシピ</label>
-          {inputFields.map((inputField) => (
+          {inputFields.map((inputField, idx) => (
             <div key={inputField.id}>
               <InputComponent
                 id={inputField.id}
                 servings={inputField.servings}
                 ingredient={inputField.ingredient}
                 handleChangeInput={handleChangeInput}
+                inputFields={inputFields}
+                setInputFields={setInputFields}
+                idx={idx}
               />
             </div>
           ))}
-          <div className="self-end">
-            <button
-              onClick={handleAddFields}
-              type="button"
-              className="h-[44px] w-16 p-2 bg-[#74CC2D] text-white text-base rounded"
-            >
-              追加
-            </button>
-          </div>
 
           <label className="text-base font-medium">作り方</label>
-          <div className="flex">
-            <input
-              type="text"
-              value={""}
-              onChange={() => {}}
-              className="rounded outline-none text-base border-2 border-gray-200 p-2 w-full"
-            />
-
-            <div className="self-end">
-              <button
-                onClick={() => {}}
-                type="button"
-                className="h-[44px] w-16 p-2 bg-[#74CC2D] text-white text-base rounded"
-              >
-                追加
-              </button>
+          {recipes.map((recipe, idx) => (
+            <div key={recipe.id}>
+              <InputRecipes
+                id={recipe.id}
+                recipe={recipe.recipe}
+                recipes={recipes}
+                setRecipes={setRecipes}
+                handleChangeInput={handleChangeInput}
+                idx={idx}
+              />
             </div>
-          </div>
+          ))}
 
           <div className="flex gap-6 mt-10">
             <button
               onClick={handlePost}
               type="button"
-              className="border-gray-300 border-2 text-base font-medium p-2 rounded w-28 lg:w-44 outline-none"
+              className="border-gray-300 border-2 text-base font-medium p-2 rounded w-1/2 outline-none"
             >
               削除
             </button>
             <button
               onClick={handlePost}
               type="button"
-              className="bg-[#74CC2D] text-white text-base font-medium p-2 rounded w-28 lg:w-44 outline-none"
+              className="bg-[#74CC2D] text-white text-base font-medium p-2 rounded w-1/2 outline-none"
             >
               投稿
             </button>
