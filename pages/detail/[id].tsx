@@ -124,15 +124,19 @@ const Detail = ({ postDetails }: IProps) => {
               </div>
             </div>
 
-            <div className="w-full py-14 px-4">
+            <div className="w-full py-4 md:py-14 px-4">
               <h3 className="text-4xl font-light text-gray-600">材料</h3>
 
               <div className="py-8">
                 {post &&
                   post.ingredients.map((item, idx) => (
-                    <div key={idx} className="flex py-2">
-                      <span className="text-2xl w-1/12">{item.servings}</span>
-                      <span className="text-2xl w-full">{item.ingredient}</span>
+                    <div key={idx} className="flex py-2 ">
+                      <span className="text-2xl w-full border-b-2 border-dashed pb-2">
+                        {item.ingredient}
+                      </span>
+                      <span className="text-2xl w-1/3 text-center border-b-2 border-dashed">
+                        {item.servings}
+                      </span>
                     </div>
                   ))}
               </div>
@@ -143,16 +147,15 @@ const Detail = ({ postDetails }: IProps) => {
 
               <div className="py-8">
                 {post &&
-                  post.recipe.map((item, idx) => (
-                    <div key={idx} className="flex flex-col">
-                      <div>
-                        <span className="text-3xl font-light text-gray-600">
-                          {`Step ${idx + 1} / ${post.recipe.length}`}
-                        </span>
-                      </div>
-                      <div>
-                        <p className="text-xl py-8">{item}</p>
-                      </div>
+                  post.recipes.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="flex justify-start items-center pt-4"
+                    >
+                      <span className="text-xl md:text-2xl font-light text-white h-full w-[40px] md:w-[60px] p-2 md:p-4 bg-[#74CC2D] rounded text-center mr-2 md:mr-4">
+                        {idx + 1}
+                      </span>
+                      <p className="text-xl w-full">{item.recipe}</p>
                     </div>
                   ))}
               </div>
