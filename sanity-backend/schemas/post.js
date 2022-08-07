@@ -63,12 +63,12 @@ export default {
       ],
     },
     {
-      name: "recipe",
-      title: "Recipe",
+      name: "recipes",
+      title: "Recipes",
       type: "array",
       of: [
         {
-          type: "string",
+          type: "recipes",
         },
       ],
     },

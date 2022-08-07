@@ -28,7 +28,10 @@ export const allPostsQuery = () => {
       ingredient,
       servings
     },
-    recipe
+    recipes[]{
+      id,
+      recipe
+    }
   }`;
 
   return query;
@@ -63,7 +66,10 @@ export const postDetailQuery = (postId: string | string[]) => {
       ingredient,
       servings
     },
-    recipe
+    recipes[]{
+      id,
+      recipe
+    }
   }`;
   return query;
 };
@@ -98,7 +104,10 @@ likes,
       ingredient,
       servings
     },
-    recipe
+    recipes[]{
+      id,
+      recipe
+    }
   }`;
   return query;
 };
@@ -146,7 +155,10 @@ export const userCreatedPostsQuery = (userId: string | string[]) => {
       ingredient,
       servings
     },
-    recipe
+    recipes[]{
+      id,
+      recipe
+    }
   }`;
 
   return query;
@@ -183,7 +195,10 @@ export const userLikedPostsQuery = (userId: string | string[]) => {
       ingredient,
       servings
     },
-    recipe
+    recipes[]{
+      id,
+      recipe
+    }
   }`;
 
   return query;
@@ -220,7 +235,10 @@ export const topicPostsQuery = (topic: string | string[]) => {
       ingredient,
       servings
     },
-    recipe
+    recipes[]{
+      id,
+      recipe
+    }
   }`;
 
   return query;

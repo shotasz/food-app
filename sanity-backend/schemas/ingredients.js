@@ -13,5 +13,10 @@ export default {
       title: "Ingredient",
       type: "string",
     },
+    {
+      name: "id",
+      title: "Id",
+      type: "string",
+    },
   ],
 };
