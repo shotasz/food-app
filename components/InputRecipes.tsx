@@ -13,6 +13,7 @@ interface IProps {
     state: IRecipe[],
     setState: Dispatch<SetStateAction<IRecipe[]>>
   ) => void;
+  idx: number;
 }
 
 interface IRecipe {
@@ -28,6 +29,7 @@ const InputRecipes = ({
   recipes,
   setRecipes,
   handleChangeInput,
+  idx,
 }: IProps) => {
   const { userProfile }: { userProfile: any } = useAuthStore();
   const handleAddFields = () => {
@@ -54,7 +56,7 @@ const InputRecipes = ({
     <div>
       <div className="flex">
         <div className="mr-2 flex w-full justify-center items-center">
-          <label className="text-sm font-medium p-2 w-8">1</label>
+          <label className="text-sm font-medium p-2 w-8">{idx + 1}</label>
           <input
             type="text"
             name="recipe"
@@ -66,8 +68,18 @@ const InputRecipes = ({
           />
         </div>
 
-        {recipes.length > 1 ? (
-          <div className="self-end mr-2">
+        {recipes.slice(-1)[0] === recipes[idx] ? (
+          <div className="self-end">
+            <button
+              onClick={handleAddFields}
+              type="button"
+              className="h-[44px] w-16 p-2 bg-[#74CC2D] text-white text-base rounded"
+            >
+              追加
+            </button>
+          </div>
+        ) : (
+          <div className="self-end">
             <button
               onClick={() => handleRemoveFields(id)}
               type="button"
@@ -76,18 +88,7 @@ const InputRecipes = ({
               削除
             </button>
           </div>
-        ) : (
-          ""
         )}
-        <div className="self-end">
-          <button
-            onClick={handleAddFields}
-            type="button"
-            className="h-[44px] w-16 p-2 bg-[#74CC2D] text-white text-base rounded"
-          >
-            追加
-          </button>
-        </div>
       </div>
     </div>
   );

@@ -14,6 +14,7 @@ interface IProps {
   id: string;
   inputFields: IIngredients[];
   setInputFields: Dispatch<SetStateAction<IIngredients[]>>;
+  idx: number;
 }
 
 interface IIngredients {
@@ -31,6 +32,7 @@ const InputComponent = ({
   id,
   inputFields,
   setInputFields,
+  idx,
 }: IProps) => {
   const { userProfile }: { userProfile: any } = useAuthStore();
   const handleAddFields = () => {
@@ -46,6 +48,8 @@ const InputComponent = ({
     ]);
   };
 
+  console.log(inputFields.slice(-1)[0] === inputFields[idx]);
+
   const handleRemoveFields = (id: string) => {
     const values = [...inputFields];
     values.splice(
@@ -58,7 +62,9 @@ const InputComponent = ({
     <div>
       <div className="flex">
         <div className="mr-2">
-          <label className="text-sm font-medium">材料</label>
+          <label className="text-sm font-medium">
+            {idx === 0 ? "材料" : ""}
+          </label>
           <input
             type="text"
             name="ingredient"
@@ -70,7 +76,9 @@ const InputComponent = ({
           />
         </div>
         <div className="mr-2">
-          <label className="text-sm font-medium">単位</label>
+          <label className="text-sm font-medium">
+            {idx === 0 ? "単位" : ""}
+          </label>
           <input
             type="text"
             name="servings"
@@ -82,8 +90,18 @@ const InputComponent = ({
           />
         </div>
 
-        {inputFields.length > 1 ? (
-          <div className="self-end mr-2">
+        {inputFields.slice(-1)[0] === inputFields[idx] ? (
+          <div className="self-end">
+            <button
+              onClick={handleAddFields}
+              type="button"
+              className="h-[44px] w-16 p-2 bg-[#74CC2D] text-white text-base rounded"
+            >
+              追加
+            </button>
+          </div>
+        ) : (
+          <div className="self-end">
             <button
               onClick={() => handleRemoveFields(id)}
               type="button"
@@ -92,18 +110,7 @@ const InputComponent = ({
               削除
             </button>
           </div>
-        ) : (
-          ""
         )}
-        <div className="self-end">
-          <button
-            onClick={handleAddFields}
-            type="button"
-            className="h-[44px] w-16 p-2 bg-[#74CC2D] text-white text-base rounded"
-          >
-            追加
-          </button>
-        </div>
       </div>
     </div>
   );
