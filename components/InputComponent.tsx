@@ -48,8 +48,6 @@ const InputComponent = ({
     ]);
   };
 
-  console.log(inputFields.slice(-1)[0] === inputFields[idx]);
-
   const handleRemoveFields = (id: string) => {
     const values = [...inputFields];
     values.splice(
