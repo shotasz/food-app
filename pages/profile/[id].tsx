@@ -35,7 +35,7 @@ const Profile = ({ data }: IProps) => {
 
   return (
     <div className="w-full">
-      <div className="flex gap-6 md:gap-10 mb-4 bg-white w-full">
+      <div className="flex gap-6 md:gap-10 my-4 bg-white w-full">
         <div className="w-16 md:w-32 h-16 md:h-32">
           <Image
             width={120}
@@ -74,7 +74,7 @@ const Profile = ({ data }: IProps) => {
             いいね
           </p>
         </div>
-        <div className="flex gap-6 flex-wrap md:justify-start">
+        <div className="flex gap-6 flex-wrap justify-center md:justify-start">
           {videoList.length > 0 ? (
             videoList.map((post: Video, idx: number) => (
               <ImageCard post={post} key={idx} />

@@ -83,7 +83,7 @@ const ImageCard: NextPage<IProps> = ({ post }) => {
         </div>
       </div>
 
-      <div className="flex cursor-pointer font-semibold xl:w-[250px] lg:w-[280px] md:w-[300px] w-full">
+      <div className="flex cursor-pointer font-semibold w-full">
         <div className="md:w-10 w-8 md:h-10 h-8">
           <Link href={`/profile/${post.postedBy._id}`}>
             <>
@@ -101,7 +101,7 @@ const ImageCard: NextPage<IProps> = ({ post }) => {
         <div>
           <Link href={`/profile/${post.postedBy._id}`}>
             <div className="flex flex-col md:mx-3 mx-1">
-              <p className="flex items-center md:text-base text-sm font-bold text-blue-600 hover:text-blue-400 transition-all">
+              <p className="flex items-center md:text-base text-xs font-bold text-blue-600 hover:text-blue-400 transition-all">
                 {post.postedBy.userName}
                 <GoVerified className="text-blue-400 text-base ml-1 md:flex hidden" />
               </p>
