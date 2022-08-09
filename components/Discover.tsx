@@ -19,7 +19,7 @@ const Discover = () => {
       <p className="text-gray-500 font-semibold m-3 mt-4 hidden xl:block">
         レシピ
       </p>
-      <div className="flex gap-2 flex-col mx-3">
+      <div className="flex gap-2 flex-col mx-2">
         {topics.map((item) => (
           <Link href={`/?topic=${item.name}`} key={item.name}>
             <div
