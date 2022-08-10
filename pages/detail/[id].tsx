@@ -4,8 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { GoVerified } from "react-icons/go";
 import { MdOutlineCancel } from "react-icons/md";
-import { BsFillPlayFill } from "react-icons/bs";
-import { HiVolumeUp, HiVolumeOff } from "react-icons/hi";
 import axios from "axios";
 
 import { BASE_URL } from "../../utils";
@@ -80,7 +78,7 @@ const Detail = ({ postDetails }: IProps) => {
             <div className="w-full pt-8 lg:hidden border-b-2 border-gray-200">
               <div className="flex gap-3 p-2 cursor-pointer font-semibold rounded">
                 <div className="w-10 h-10">
-                  <Link href="/">
+                  <Link href={`/detail/${post._id}`}>
                     <>
                       <Image
                         width={62}
@@ -95,7 +93,7 @@ const Detail = ({ postDetails }: IProps) => {
                   </Link>
                 </div>
                 <div>
-                  <Link href="/">
+                  <Link href={`/detail/${post._id}`}>
                     <div className="flex flex-col gap-2 mt-2">
                       <p className="flex gap-2 items-center md:text-base font-bold text-primary">
                         {post.postedBy.userName}
@@ -167,7 +165,7 @@ const Detail = ({ postDetails }: IProps) => {
           <div className="mt-10 hidden lg:block">
             <div className="flex gap-3 p-2 cursor-pointer font-semibold rounded">
               <div className="w-16 h-16 ml-4">
-                <Link href="/">
+                <Link href={`/detail/${post._id}`}>
                   <>
                     <Image
                       width={62}
@@ -182,7 +180,7 @@ const Detail = ({ postDetails }: IProps) => {
                 </Link>
               </div>
               <div>
-                <Link href="/">
+                <Link href={`/detail/${post._id}`}>
                   <div className="flex flex-col gap-2 mt-3">
                     <p className="flex gap-2 items-center md:text-base font-bold text-primary">
                       {post.postedBy.userName}
