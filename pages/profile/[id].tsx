@@ -34,11 +34,11 @@ const Profile = () => {
     }
   }, [fetchAllPosts, userProfile, userVideos, userLikedVideos, showUserVideos]);
 
-  const removePostHandler = async (postId: string) => {
-    if (userProfile) {
-      const data = await axios.delete(`${BASE_URL}/api/post/${postId}`);
-    }
-  };
+  // const removePostHandler = async (postId: string) => {
+  //   if (userProfile) {
+  //     const data = await axios.delete(`${BASE_URL}/api/post/${postId}`);
+  //   }
+  // };
 
   return (
     <div className="w-full">
@@ -87,7 +87,7 @@ const Profile = () => {
               <ImageCard
                 post={post}
                 key={idx}
-                removePostHandler={removePostHandler}
+                // removePostHandler={removePostHandler}
               />
             ))
           ) : (

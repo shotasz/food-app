@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import axios from "axios";
 
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { GoVerified } from "react-icons/go";
@@ -9,13 +10,13 @@ import { GoVerified } from "react-icons/go";
 import { Video } from "../types";
 import useAuthStore from "../store/authStore";
 import { useRouter } from "next/router";
+import { BASE_URL } from "../utils";
 
 interface IProps {
   post: Video;
-  removePostHandler?: (postId: any) => void;
 }
 
-const ImageCard: NextPage<IProps> = ({ post, removePostHandler }) => {
+const ImageCard: NextPage<IProps> = ({ post }) => {
   const [isClick, setIsClick] = useState(false);
   const [isProfilePage, setIsProfilePage] = useState(false);
   const { userProfile }: any = useAuthStore();
@@ -28,6 +29,12 @@ const ImageCard: NextPage<IProps> = ({ post, removePostHandler }) => {
       setIsProfilePage(false);
     }
   }, [router]);
+
+  const removePostHandler = async (postId: string) => {
+    if (userProfile) {
+      const data = await axios.delete(`${BASE_URL}/api/post/${postId}`);
+    }
+  };
 
   return (
     <div className="flex flex-col">
