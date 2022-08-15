@@ -8,37 +8,30 @@ import ImageCard from "../../components/ImageCard";
 import NoResults from "../../components/NoResults";
 import { IUser, Video } from "../../types";
 import { BASE_URL } from "../../utils";
-import useAuthStore from "../../store/authStore";
 
 interface IProps {
-  user: IUser;
-  userVideos: Video[];
-  userLikedVideos: Video[];
+  data: {
+    user: IUser;
+    userVideos: Video[];
+    userLikedVideos: Video[];
+  };
 }
 
-const Profile = ({ data }: { data: { user: IUser } }) => {
+const Profile = ({ data }: IProps) => {
   const [showUserVideos, setShowUserVideos] = useState(true);
   const [videoList, setVideoList] = useState<Video[]>([]);
-  const { fetchAllPosts, allPosts }: any = useAuthStore();
-  const { user, userVideos, userLikedVideos }: IProps = allPosts;
+  const { user, userVideos, userLikedVideos } = data;
 
   const videos = showUserVideos ? "border-b-2 border-black" : "text-gray-400";
   const liked = !showUserVideos ? "border-b-2 border-black" : "text-gray-400";
 
   useEffect(() => {
-    fetchAllPosts(data.user._id);
     if (showUserVideos) {
       setVideoList(userVideos);
     } else {
       setVideoList(userLikedVideos);
     }
-  }, [fetchAllPosts, data, userVideos, userLikedVideos, showUserVideos]);
-
-  // const removePostHandler = async (postId: string) => {
-  //   if (userProfile) {
-  //     const data = await axios.delete(`${BASE_URL}/api/post/${postId}`);
-  //   }
-  // };
+  }, [showUserVideos, userVideos, userLikedVideos]);
 
   return (
     <div className="w-full">
@@ -84,11 +77,7 @@ const Profile = ({ data }: { data: { user: IUser } }) => {
         <div className="flex gap-6 flex-wrap justify-center md:justify-start">
           {videoList.length > 0 ? (
             videoList.map((post: Video, idx: number) => (
-              <ImageCard
-                post={post}
-                key={idx}
-                // removePostHandler={removePostHandler}
-              />
+              <ImageCard post={post} key={idx} />
             ))
           ) : (
             <NoResults
