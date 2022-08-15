@@ -8,30 +8,37 @@ import ImageCard from "../../components/ImageCard";
 import NoResults from "../../components/NoResults";
 import { IUser, Video } from "../../types";
 import { BASE_URL } from "../../utils";
+import useAuthStore from "../../store/authStore";
 
 interface IProps {
-  data: {
-    user: IUser;
-    userVideos: Video[];
-    userLikedVideos: Video[];
-  };
+  user: IUser;
+  userVideos: Video[];
+  userLikedVideos: Video[];
 }
 
-const Profile = ({ data }: IProps) => {
+const Profile = () => {
   const [showUserVideos, setShowUserVideos] = useState(true);
   const [videoList, setVideoList] = useState<Video[]>([]);
-  const { user, userVideos, userLikedVideos } = data;
+  const { userProfile, fetchAllPosts, allPosts }: any = useAuthStore();
+  const { user, userVideos, userLikedVideos }: IProps = allPosts;
 
   const videos = showUserVideos ? "border-b-2 border-black" : "text-gray-400";
   const liked = !showUserVideos ? "border-b-2 border-black" : "text-gray-400";
 
   useEffect(() => {
+    fetchAllPosts(userProfile._id);
     if (showUserVideos) {
       setVideoList(userVideos);
     } else {
       setVideoList(userLikedVideos);
     }
-  }, [showUserVideos, userVideos, userLikedVideos]);
+  }, [fetchAllPosts, userProfile, userVideos, userLikedVideos, showUserVideos]);
+
+  const removePostHandler = async (postId: string) => {
+    if (userProfile) {
+      const data = await axios.delete(`${BASE_URL}/api/post/${postId}`);
+    }
+  };
 
   return (
     <div className="w-full">
@@ -77,7 +84,11 @@ const Profile = ({ data }: IProps) => {
         <div className="flex gap-6 flex-wrap justify-center md:justify-start">
           {videoList.length > 0 ? (
             videoList.map((post: Video, idx: number) => (
-              <ImageCard post={post} key={idx} />
+              <ImageCard
+                post={post}
+                key={idx}
+                removePostHandler={removePostHandler}
+              />
             ))
           ) : (
             <NoResults
@@ -90,18 +101,18 @@ const Profile = ({ data }: IProps) => {
   );
 };
 
-export const getServerSideProps = async ({
-  params: { id },
-}: {
-  params: { id: string };
-}) => {
-  const res = await axios.get(`${BASE_URL}/api/profile/${id}`);
+// export const getServerSideProps = async ({
+//   params: { id },
+// }: {
+//   params: { id: string };
+// }) => {
+//   const res = await axios.get(`${BASE_URL}/api/profile/${id}`);
 
-  return {
-    props: {
-      data: res.data,
-    },
-  };
-};
+//   return {
+//     props: {
+//       data: res.data,
+//     },
+//   };
+// };
 
 export default Profile;
