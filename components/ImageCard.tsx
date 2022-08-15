@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,9 +12,10 @@ import { useRouter } from "next/router";
 
 interface IProps {
   post: Video;
+  removePostHandler: (postId: any) => void;
 }
 
-const ImageCard: NextPage<IProps> = ({ post }) => {
+const ImageCard: NextPage<IProps> = ({ post, removePostHandler }) => {
   const [isClick, setIsClick] = useState(false);
   const [isProfilePage, setIsProfilePage] = useState(false);
   const { userProfile }: any = useAuthStore();
@@ -51,28 +52,34 @@ const ImageCard: NextPage<IProps> = ({ post }) => {
           {userProfile && (
             <>
               {isProfilePage ? (
-                <>
-                  <div
-                    onClick={() => setIsClick(!isClick)}
-                    className="absolute top-2 right-2 z-10 flex flex-col items-end"
-                  >
-                    <div>
-                      <BsThreeDotsVertical className="bg-white p-3 h-12 w-12 rounded hover:bg-gray-100" />
-                    </div>
-                    {isClick ? (
-                      <>
-                        <div className="bg-white h-10 w-16 text-base flex justify-center items-center rounded hover:bg-gray-100">
-                          <span className="p-2">編集</span>
-                        </div>
-                        <div className="bg-red-500 h-10 w-16 text-base text-white flex justify-center items-center rounded hover:bg-red-400">
-                          <span className="p-2">削除</span>
-                        </div>
-                      </>
-                    ) : (
-                      ""
-                    )}
+                <div
+                  onClick={() => setIsClick(!isClick)}
+                  className="absolute top-2 right-2 z-10 flex flex-col items-end"
+                >
+                  <div>
+                    <BsThreeDotsVertical className="bg-white p-3 h-12 w-12 rounded hover:bg-gray-100" />
                   </div>
-                </>
+                  {isClick ? (
+                    <>
+                      <div className="bg-white h-10 w-16 text-base flex justify-center items-center rounded hover:bg-gray-100">
+                        <button type="submit" className="p-2">
+                          編集
+                        </button>
+                      </div>
+                      <div className="bg-red-500 h-10 w-16 text-base text-white flex justify-center items-center rounded hover:bg-red-400">
+                        <button
+                          type="submit"
+                          onClick={() => removePostHandler(post._id)}
+                          className="p-2"
+                        >
+                          削除
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </div>
               ) : (
                 ""
               )}
