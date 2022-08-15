@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 
 interface IProps {
   post: Video;
-  removePostHandler: (postId: any) => void;
+  removePostHandler?: (postId: any) => void;
 }
 
 const ImageCard: NextPage<IProps> = ({ post, removePostHandler }) => {
