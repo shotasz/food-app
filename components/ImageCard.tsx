@@ -33,6 +33,7 @@ const ImageCard: NextPage<IProps> = ({ post }) => {
   const removePostHandler = async (postId: string) => {
     if (userProfile) {
       const data = await axios.delete(`${BASE_URL}/api/post/${postId}`);
+      router.push(`/profile/${userProfile._id}`);
     }
   };
 
