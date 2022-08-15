@@ -6,6 +6,7 @@ import { BASE_URL } from "../utils";
 const authStore = (set: any) => ({
   userProfile: null,
   allUsers: [],
+  allPosts: [],
 
   addUser: (user: any) => set({ userProfile: user }),
 
@@ -15,6 +16,11 @@ const authStore = (set: any) => ({
     const response = await axios.get(`${BASE_URL}/api/users`);
 
     set({ allUsers: response.data });
+  },
+  fetchAllPosts: async (user: any) => {
+    const { data } = await axios.get(`${BASE_URL}/api/profile/${user}`);
+
+    set({ allPosts: data });
   },
 });
 
