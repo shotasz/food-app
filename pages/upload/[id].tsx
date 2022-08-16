@@ -1,31 +1,27 @@
-import React, { useState, ChangeEvent } from "react";
-import { useRouter } from "next/router";
-import { FaCloudUploadAlt } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
+import { SanityAssetDocument } from "@sanity/client";
 import Image from "next/image";
 import axios from "axios";
-import { SanityAssetDocument } from "@sanity/client";
-import InputComponent from "../components/InputComponent";
+import React, { ChangeEvent, useState } from "react";
+import { FaCloudUploadAlt } from "react-icons/fa";
+import useAuthStore from "../../store/authStore";
+import { topics } from "../../utils/constants";
+import { Video } from "../../types";
+import { BASE_URL } from "../../utils";
 import { v4 as uuidv4 } from "uuid";
+import InputComponent from "../../components/InputComponent";
+import InputRecipes from "../../components/InputRecipes";
+import { useRouter } from "next/router";
 
-import useAuthStore from "../store/authStore";
-import { client } from "../utils/client";
-import { topics } from "../utils/constants";
-import { BASE_URL } from "../utils";
-import InputRecipes from "../components/InputRecipes";
+interface IProps {
+  data: Video;
+}
 
-const Upload = () => {
+const UploadPatch = ({ data }: IProps) => {
+  const { caption, video, ingredients, recipes } = data;
   const [isLoading, setIsLoading] = useState(false);
-  const [imageAsset, setImageAsset] = useState<
-    SanityAssetDocument | undefined
-  >();
   const [wrongFileType, setWrongFileType] = useState(false);
-  const [savingPost, setSavingPost] = useState(false);
   const router = useRouter();
   const { userProfile }: { userProfile: any } = useAuthStore();
-
-  const [caption, setCaption] = useState("");
-  const [category, setCategory] = useState(topics[0].name);
   const [inputFields, setInputFields] = useState([
     {
       _type: "ingredients",
@@ -35,7 +31,7 @@ const Upload = () => {
       ingredient: "",
     },
   ]);
-  const [recipes, setRecipes] = useState([
+  const [inputRecipes, setInputRecipes] = useState([
     {
       _type: "recipes",
       _key: userProfile?._id,
@@ -43,56 +39,6 @@ const Upload = () => {
       recipe: "",
     },
   ]);
-
-  const uploadRecipe = async (e: any) => {
-    const selectedFile = e.target.files[0];
-    const fileTypes = ["image/jpeg", "image/png"];
-
-    if (fileTypes.includes(selectedFile.type)) {
-      client.assets
-        .upload("file", selectedFile, {
-          contentType: selectedFile.type,
-          filename: selectedFile.name,
-        })
-        .then((data) => {
-          setImageAsset(data);
-          setIsLoading(false);
-        });
-    } else {
-      setIsLoading(false);
-      setWrongFileType(true);
-    }
-  };
-
-  const handlePost = async () => {
-    if (caption && imageAsset?._id && category && inputFields && recipes) {
-      setSavingPost(true);
-
-      const document = {
-        _type: "post",
-        caption,
-        video: {
-          _type: "file",
-          asset: {
-            _type: "reference",
-            _ref: imageAsset?._id,
-          },
-        },
-        userId: userProfile?._id,
-        postedBy: {
-          _type: "postedBy",
-          _ref: userProfile?._id,
-        },
-        topic: category,
-        ingredients: inputFields,
-        recipes: recipes,
-      };
-
-      await axios.post(`${BASE_URL}/api/post`, document);
-
-      router.push("/");
-    }
-  };
 
   const handleChangeInput = (
     id: string,
@@ -125,13 +71,13 @@ const Upload = () => {
               <p>アップロード中...</p>
             ) : (
               <div>
-                {imageAsset ? (
+                {video ? (
                   <div>
                     <Image
                       width={300}
                       height={400}
                       className="h-full w-full object-cover"
-                      src={imageAsset.url}
+                      src={video.asset.url}
                       alt="profile photo"
                       priority={true}
                     />
@@ -159,7 +105,7 @@ const Upload = () => {
                     <input
                       type="file"
                       name="upload-recipe"
-                      onChange={uploadRecipe}
+                      onChange={() => {}}
                       className="w-0 h-0"
                     />
                   </label>
@@ -178,13 +124,13 @@ const Upload = () => {
           <input
             type="text"
             value={caption}
-            onChange={(e) => setCaption(e.target.value)}
+            onChange={() => {}}
             className="rounded outline-none text-base border-2 border-gray-200 p-2"
           />
 
           <label className="text-base font-medium">カテゴリー選択</label>
           <select
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={() => {}}
             className="outline-none text-base border-2 border-gray-200 p-2 capitalize lg:p-4 rounded cursor-pointer"
           >
             {topics.map((topic) => (
@@ -199,12 +145,12 @@ const Upload = () => {
           </select>
 
           <label className="text-base font-medium">レシピ</label>
-          {inputFields.map((inputField, idx) => (
-            <div key={inputField.id}>
+          {ingredients.map((ingredient, idx) => (
+            <div key={ingredient.id}>
               <InputComponent
-                id={inputField.id}
-                servings={inputField.servings}
-                ingredient={inputField.ingredient}
+                id={ingredient.id}
+                servings={ingredient.servings}
+                ingredient={ingredient.ingredient}
                 handleChangeInput={handleChangeInput}
                 inputFields={inputFields}
                 setInputFields={setInputFields}
@@ -219,8 +165,8 @@ const Upload = () => {
               <InputRecipes
                 id={recipe.id}
                 recipe={recipe.recipe}
-                recipes={recipes}
-                setRecipes={setRecipes}
+                recipes={inputRecipes}
+                setRecipes={setInputRecipes}
                 handleChangeInput={handleChangeInput}
                 idx={idx}
               />
@@ -229,14 +175,14 @@ const Upload = () => {
 
           <div className="flex gap-6 mt-10">
             <button
-              onClick={handlePost}
+              onClick={() => {}}
               type="button"
               className="border-gray-300 border-2 text-base font-medium p-2 rounded w-1/2 outline-none"
             >
               削除
             </button>
             <button
-              onClick={handlePost}
+              onClick={() => {}}
               type="button"
               className="bg-[#74CC2D] text-white text-base font-medium p-2 rounded w-1/2 outline-none"
             >
@@ -249,4 +195,18 @@ const Upload = () => {
   );
 };
 
-export default Upload;
+export const getServerSideProps = async ({
+  params: { id },
+}: {
+  params: { id: string };
+}) => {
+  const res = await axios.get(`${BASE_URL}/api/post/${id}`);
+
+  return {
+    props: {
+      data: res.data,
+    },
+  };
+};
+
+export default UploadPatch;
