@@ -53,6 +53,7 @@ export const postDetailQuery = (postId: string | string[]) => {
       userName,
       image
     },
+    topic,
      likes,
     comments[]{
       comment,
@@ -63,6 +64,7 @@ export const postDetailQuery = (postId: string | string[]) => {
     },
     },
     ingredients[]{
+      id,
       ingredient,
       servings
     },
