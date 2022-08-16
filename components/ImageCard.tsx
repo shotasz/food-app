@@ -70,9 +70,11 @@ const ImageCard: NextPage<IProps> = ({ post }) => {
                   {isClick ? (
                     <>
                       <div className="bg-white h-10 w-16 text-base flex justify-center items-center rounded hover:bg-gray-100">
-                        <button type="submit" className="p-2">
-                          編集
-                        </button>
+                        <Link href={`/upload/${post._id}`}>
+                          <button type="submit" className="p-2">
+                            編集
+                          </button>
+                        </Link>
                       </div>
                       <div className="bg-red-500 h-10 w-16 text-base text-white flex justify-center items-center rounded hover:bg-red-400">
                         <button
