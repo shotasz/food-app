@@ -36,6 +36,7 @@ export interface Video {
     recipe: string;
   }[];
   userId: string;
+  topic: string;
 }
 
 export interface IUser {
