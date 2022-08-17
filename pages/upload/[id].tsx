@@ -146,7 +146,7 @@ const UploadPatch = ({ data }: IProps) => {
                       </div>
                     )}
 
-                    <p className="bg-[#74CC2D] text-center mt-10 rounded text-white text-base font-medium p-2 md:w-1/2 w-full outline-none cursor-pointer">
+                    <p className="bg-[#74CC2D] text-center mt-10 rounded text-white text-base font-medium p-2 md:w-1/2 w-3/4 outline-none cursor-pointer">
                       ファイルを選択
                     </p>
 
