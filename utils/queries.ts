@@ -64,11 +64,15 @@ export const postDetailQuery = (postId: string | string[]) => {
     },
     },
     ingredients[]{
+      _type,
+      _key,
       id,
       ingredient,
       servings
     },
     recipes[]{
+      _type,
+      _key,
       id,
       recipe
     }
