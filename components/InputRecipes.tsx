@@ -36,8 +36,8 @@ const InputRecipes = ({
     setRecipes([
       ...recipes,
       {
-        _type: "recipes",
         _key: userProfile?._id,
+        _type: "recipes",
         id: uuidv4(),
         recipe: "",
       },
@@ -71,7 +71,7 @@ const InputRecipes = ({
         {recipes.slice(-1)[0] === recipes[idx] ? (
           <div className="self-end">
             <button
-              onClick={handleAddFields}
+              onClick={() => handleAddFields()}
               type="button"
               className="h-[44px] w-16 p-2 bg-[#74CC2D] text-white text-base rounded"
             >

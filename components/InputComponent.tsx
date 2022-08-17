@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { v4 as uuidv4 } from "uuid";
 import useAuthStore from "../store/authStore";
 
@@ -39,8 +39,8 @@ const InputComponent = ({
     setInputFields([
       ...inputFields,
       {
-        _type: "ingredients",
         _key: userProfile?._id,
+        _type: "ingredients",
         id: uuidv4(),
         servings: "",
         ingredient: "",
@@ -91,7 +91,7 @@ const InputComponent = ({
         {inputFields.slice(-1)[0] === inputFields[idx] ? (
           <div className="self-end">
             <button
-              onClick={handleAddFields}
+              onClick={() => handleAddFields()}
               type="button"
               className="h-[44px] w-16 p-2 bg-[#74CC2D] text-white text-base rounded"
             >
