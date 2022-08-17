@@ -49,6 +49,7 @@ const Upload = () => {
     const fileTypes = ["image/jpeg", "image/png"];
 
     if (fileTypes.includes(selectedFile.type)) {
+      setIsLoading(true);
       client.assets
         .upload("file", selectedFile, {
           contentType: selectedFile.type,
