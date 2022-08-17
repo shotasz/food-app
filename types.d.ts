@@ -27,11 +27,15 @@ export interface Video {
     };
   }[];
   ingredients: {
+    _type: string;
+    _key: string;
     id: string;
     servings: string;
     ingredient: string;
   }[];
   recipes: {
+    _type: string;
+    _key: string;
     id: string;
     recipe: string;
   }[];
