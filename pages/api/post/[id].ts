@@ -31,6 +31,12 @@ export default async function handler(
       .commit();
 
     res.status(200).json(data);
+  } else if (req.method === "PATCH") {
+    const document = req.body;
+
+    const data = await client.createOrReplace(document);
+
+    res.status(200).json(data);
   } else if (req.method === "DELETE") {
     const { id }: any = req.query;
 

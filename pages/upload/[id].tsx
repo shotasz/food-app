@@ -18,12 +18,13 @@ interface IProps {
 }
 
 const UploadPatch = ({ data }: IProps) => {
-  const { caption, video, ingredients, recipes, topic } = data;
+  const { caption, video, ingredients, recipes, topic, _id } = data;
   const [isLoading, setIsLoading] = useState(false);
   const [wrongFileType, setWrongFileType] = useState(false);
   const router = useRouter();
   const { userProfile }: { userProfile: any } = useAuthStore();
 
+  const [savingPost, setSavingPost] = useState(false);
   const [imageAsset, setImageAsset] = useState<
     SanityAssetDocument | undefined
   >();
@@ -53,35 +54,40 @@ const UploadPatch = ({ data }: IProps) => {
     }
   };
 
-  //   const handlePost = async () => {
-  //     if (caption && imageAsset?._id && category && inputFields && recipes) {
-  //       setSavingPost(true);
+  const handlePost = async () => {
+    if (
+      changeCaption &&
+      (imageAsset?._id || video.asset?._id) &&
+      changeCategory &&
+      inputFields &&
+      inputRecipes
+    ) {
+      const document = {
+        _type: "post",
+        _id: _id,
+        caption: changeCaption,
+        video: {
+          _type: "file",
+          asset: {
+            _type: "reference",
+            _ref: imageAsset?._id || video.asset?._id,
+          },
+        },
+        userId: userProfile?._id,
+        postedBy: {
+          _type: "postedBy",
+          _ref: userProfile?._id,
+        },
+        topic: changeCategory,
+        ingredients: inputFields,
+        recipes: inputRecipes,
+      };
 
-  //       const document = {
-  //         _type: "post",
-  //         caption,
-  //         video: {
-  //           _type: "file",
-  //           asset: {
-  //             _type: "reference",
-  //             _ref: imageAsset?._id,
-  //           },
-  //         },
-  //         userId: userProfile?._id,
-  //         postedBy: {
-  //           _type: "postedBy",
-  //           _ref: userProfile?._id,
-  //         },
-  //         topic: category,
-  //         ingredients: inputFields,
-  //         recipes: recipes,
-  //       };
+      await axios.patch(`${BASE_URL}/api/post/${_id}`, document);
 
-  //       await axios.post(`${BASE_URL}/api/post`, document);
-
-  //       router.push("/");
-  //     }
-  //   };
+      router.push("/");
+    }
+  };
 
   const handleChangeInput = (
     id: string,
@@ -121,7 +127,7 @@ const UploadPatch = ({ data }: IProps) => {
                         <Image
                           width={300}
                           height={400}
-                          className="h-full w-full object-cover"
+                          className="h-full w-full object-cover p-4"
                           src={imageAsset.url}
                           alt="profile photo"
                           priority={true}
@@ -132,7 +138,7 @@ const UploadPatch = ({ data }: IProps) => {
                         <Image
                           width={300}
                           height={400}
-                          className="h-full w-full object-cover"
+                          className="h-full w-full object-cover p-4"
                           src={video.asset.url}
                           alt="profile photo"
                           priority={true}
@@ -224,7 +230,7 @@ const UploadPatch = ({ data }: IProps) => {
               削除
             </button>
             <button
-              onClick={() => {}}
+              onClick={handlePost}
               type="button"
               className="bg-[#74CC2D] text-white text-base font-medium p-2 rounded w-1/2 outline-none"
             >
