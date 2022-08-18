@@ -22,11 +22,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     >
       <div className="overflow-hidden h-[100vh]">
         <Navbar />
-        <div className="flex gap-0 md:gap-10">
+        <div className="flex">
           <div className="h-[92vh] overflow-hidden xl:hover:overflow-auto md:ml-16">
             <Sidebar />
           </div>
-          <div className="pt-8 p-4 flex flex-wrap overflow-auto h-[87vh] flex-1">
+          <div className="pt-8 p-2 flex flex-wrap justify-center overflow-auto h-[87vh] flex-1">
             <Component {...pageProps} />
           </div>
         </div>
