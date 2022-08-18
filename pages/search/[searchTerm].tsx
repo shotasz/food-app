@@ -96,7 +96,8 @@ export const getServerSideProps = async ({
 }: {
   params: { searchTerm: string };
 }) => {
-  const res = await axios.get(`${BASE_URL}/api/search/${searchTerm}`);
+  const term = encodeURIComponent(searchTerm);
+  const res = await axios.get(`${BASE_URL}/api/search/${term}`);
 
   return {
     props: {
